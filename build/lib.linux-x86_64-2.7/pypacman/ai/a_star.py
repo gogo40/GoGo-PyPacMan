@@ -163,7 +163,7 @@ def a_star(G, dx, dy, H = h_std, dist = dist_e):
 			duv = dist(u, v);
 			if vx > -1 and vx < len(G):
 				if vy > -1 and vy < len(G[vx]): 
-					if (D[vx][vy] > D[ux][uy] + duv or D[vx][vy] == None) and G[vx][vy] != '#':
+					if (D[vx][vy] > D[ux][uy] + duv or D[vx][vy] == None) and (G[vx][vy] == '.' or G[vx][vy] == '+'):
 						D[vx][vy] = D[ux][uy] + duv;
 						pi[vx][vy] = u;
 						"""
