@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from pypacman import * 
 
-res = AI.Astar(G, dx, dy, Hstd, distE);
+res = Astar(G, dx, dy, Hstd, distE);
 
 D = res['D'];
 t = res['t'];
