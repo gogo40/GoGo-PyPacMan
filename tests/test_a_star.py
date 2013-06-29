@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from pypacman.ai import *
 
+a_star.hello();
+
 """
 Teste do Astar
 """
@@ -59,7 +61,7 @@ if D[t[0]][t[1]] != None:
 	"""
 	Descomente essa linha caso queira ver a sequencia de passos percorrido pelo jogador
 	"""
-	imprime_caminho(pi, t);
+	a_star.imprime_caminho(pi, t);
 	"""
 	Descomente essa linha se quiseres ver o caminho percorrido na grade
 	"""

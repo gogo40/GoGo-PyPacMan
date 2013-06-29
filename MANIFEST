@@ -4,3 +4,5 @@ LICENSE.txt
 README.txt
 setup.py
 pypacman/__init__.py
+pypacman/ai/__init__.py
+pypacman/ai/a_star.py

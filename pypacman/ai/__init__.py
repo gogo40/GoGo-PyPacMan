@@ -1,2 +1,2 @@
 from . import *
-from a_star import *
+import a_star
