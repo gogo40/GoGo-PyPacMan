@@ -2,12 +2,12 @@ from distutils.core import setup
 
 setup(
     name='PyPacMan',
-    version='0.1.0',
+    version='0.1.1',
     author='Pericles Lopes Machado',
     author_email='pericles.raskolnikoff@gmail.com',
     packages=['gui', 'IO', 'AI', 'game'],
     scripts=[],
-    url='https://github.com/gogo40/PyPacMan',
+    url='http://pypi.python.org/pypi/PyPacMan/',
     license='LICENSE.txt',
     description='Useful towel-related stuff.',
     long_description=open('README.txt').read(),
