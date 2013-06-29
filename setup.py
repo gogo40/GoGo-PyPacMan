@@ -2,10 +2,10 @@ from distutils.core import setup
 
 setup(
     name='PyPacMan',
-    version='0.1.1',
+    version='0.1.2',
     author='Pericles Lopes Machado',
     author_email='pericles.raskolnikoff@gmail.com',
-    packages=['gui', 'IO', 'AI', 'game'],
+    packages=['pypacman'],
     scripts=[],
     url='http://pypi.python.org/pypi/PyPacMan/',
     license='LICENSE.txt',

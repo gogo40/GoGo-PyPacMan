@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from AI import * 
+from pypacman import * 
 
 res = AI.Astar(G, dx, dy, Hstd, distE);
 
