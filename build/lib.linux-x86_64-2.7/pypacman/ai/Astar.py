@@ -71,6 +71,28 @@ def renderizar_caminho(pi, G, u):
 		renderizar_caminho(pi, G, pi[ux][uy]);
 		renderizar_grade(G, ux, uy);
 
+"""
+Heurística que estima a distancia para o destino: (Heuristica padrão)
+
+H(p, t) = sqrt((p.x - t.x)^2 + (p.y - t.y)^2)
+
+Nesse código utilizamos o quadrado da distância euclidiana como estimativa.
+"""
+
+def Hstd(s, t):
+	Dx = s[0] - t[0];
+	Dy = s[1] - t[1];
+	return sqrt(Dx * Dx + Dy * Dy);
+
+"""
+Métrica Euclidiana
+"""
+def distE(s, t):
+	Dx = s[0] - t[0];
+	Dy = s[1] - t[1];
+	return sqrt(Dx * Dx + Dy * Dy);
+
+
 
 """
 Função que aplica o A* a uma grade
@@ -85,7 +107,7 @@ H é a heuristica utilizada
 dist é a métrica.
 """
 
-def Astar(G, dx, dy, H, dist):
+def Astar(G, dx, dy, H = Hstd, dist = distE):
 	"""
 	Localizando a posição do jogador ('x') e do destino ('+')
 	e inicializa matriz com estimativa de distância D.
@@ -149,28 +171,6 @@ def Astar(G, dx, dy, H, dist):
 						"""
 						heappush(Q, (D[vx][vy] + H(v, t), v));
 	return {'D':D, 't': t, 'pi': pi, 'u': u};
-
-"""
-Heurística que estima a distancia para o destino: (Heuristica padrão)
-
-H(p, t) = sqrt((p.x - t.x)^2 + (p.y - t.y)^2)
-
-Nesse código utilizamos o quadrado da distância euclidiana como estimativa.
-"""
-
-def Hstd(s, t):
-	Dx = s[0] - t[0];
-	Dy = s[1] - t[1];
-	return sqrt(Dx * Dx + Dy * Dy);
-
-"""
-Métrica Euclidiana
-"""
-def distE(s, t):
-	Dx = s[0] - t[0];
-	Dy = s[1] - t[1];
-	return sqrt(Dx * Dx + Dy * Dy);
-
 
 
 

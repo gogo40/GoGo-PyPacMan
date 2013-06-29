@@ -1,3 +1,7 @@
 python setup.py sdist
-python setup.py sdist upload
+sudo python setup.py install
+
+#python setup.py sdist upload
+
+python tests/test_a_star.py
 

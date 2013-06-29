@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from pypacman import * 
+from pypacman.ai import *
 
 """
 Teste do Astar
@@ -47,7 +47,7 @@ Possibilidades de movimentação:
 dx = [-1, -1, -1,  0,  0,  1,  1,  1];
 dy = [-1,  0,  1, -1,  1, -1,  0,  1];
 
-res = Astar(G, dx, dy, Hstd, distE);
+res = a_star.a_star(G, dx, dy);
 
 D = res['D'];
 t = res['t'];
