@@ -19,6 +19,9 @@ class Window:
 
 
 		#elementos do jogo
+		self.empty = pygame.Surface((self.dim_cell, self.dim_cell))
+		self.empty.fill(self.color)
+
 		self.pacmano = pygame.image.load("imgs/pacman.png")
 		self.pacman = self.pacmano = pygame.transform.smoothscale(self.pacmano, (self.dim_cell, self.dim_cell))
 
@@ -110,6 +113,8 @@ class Window:
 				self.position[0] + self.d[0] <= self.width - self.position[2] and
 				self.position[1] + self.d[1] >= 0 and 
 				self.position[1] + self.d[1] <= self.height - self.position[3]):
+
+				self.screen.blit(self.empty, self.position)
 
 				self.position_pac_man = self.position.move(self.d)	
 	
