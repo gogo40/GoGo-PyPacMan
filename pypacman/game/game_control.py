@@ -18,8 +18,8 @@ class Game:
 	def add_point(self, point):
 		self.score = self.score + point
 
-	def get_score():
-		return self.score
+	def get_score(self):
+		return "%09d  " % self.score
 
 	def print_score(self):
 		print "Score:"

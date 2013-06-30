@@ -37,7 +37,7 @@ class Window:
 
 		self.size = self.width, self.height = self.dim_cell * len(G[0]), self.dim_cell * len(G)
 
-		self.screen = pygame.display.set_mode((self.width, self.height + 100))
+		self.screen = pygame.display.set_mode((self.width, self.height + 50))
 		pygame.display.set_caption('PyPacMan')
 		
 		#cor do fundo
@@ -46,6 +46,7 @@ class Window:
 		self.WHITE = (255, 255, 255)
 		self.GREEN = (0, 255, 0)
 		self.BLUE = (0, 0, 128)
+		self.YELLOW = (255, 255, 0)
 
 		self.color = self.BLACK
 
@@ -88,10 +89,10 @@ class Window:
 	"""
 	Adiciona mensagem do jogo
 	"""
-	def addMsg(self, msg, color):
+	def addMsg(self, msg, color, x = 200, y = 200):
 		msg = self.fonte.render(msg, True, color, self.BLACK)
 		msg_rect = msg.get_rect()
-		msg_rect = msg_rect.move(200, self.height)
+		msg_rect = msg_rect.move(x, y)
 
 		self.screen.blit(msg, msg_rect)
 
@@ -109,7 +110,7 @@ class Window:
 
 		score = self.fonte.render(score, True, self.WHITE, self.BLACK)
 		score_rect = score.get_rect()
-		score_rect = score_rect.move(100, self.height)
+		score_rect = score_rect.move(70, self.height)
 
 		self.screen.blit(score, score_rect)
 
@@ -191,8 +192,7 @@ class Window:
 
 		if self.G[x][y] == 'o':
 			self.game.add_point(1)
-			self.game.print_score()	
-		
+			
 		if self.G[x][y] == '.' or self.G[x][y] == 'o':
 			self.real_pos_pac_man = [x, y]
 			self.screen.blit(self.empty, position)
@@ -223,7 +223,6 @@ class Window:
 		self.screen.fill(self.color)
 		self.paintGrid()
 		pygame.display.flip()
-		self.addScore("Score:", "0000000")
 		
 		is_running = True
 		while is_running:
@@ -294,22 +293,33 @@ class Window:
 				
 			#Verifica se jogo acabou
 			if self.game.is_over():
-				print "You Win!"
-				self.addMsg("You win!", self.GREEN)
+				self.addMsg("You win!", self.GREEN, 200, self.height)
 				self.game.print_score()
-				is_running = False
 				break
 
 			#Move o pac man e verifica se ele tá vivo ainda
 			if not self.move_pac_man():
-				print "You Lose!"
-				self.addMsg("You lose!", self.RED)
-				is_running = False
+				self.addMsg("You lose!", self.RED, 200, self.height)
 				break
 
-			self.addScore("Score:", "0000000")
+			self.addScore("Score:", self.game.get_score())
 
 			#Dorme um pouco
+			pygame.time.delay(self.delay)
+
+		#aguarda ESC ou QUIT
+		self.addMsg("Press ESC to exit...", self.YELLOW, 300, self.height)
+		while is_running:
+			for event in pygame.event.get():
+				#Fecha janela
+				if event.type == pygame.QUIT: 
+					is_running = False
+					break
+
+				elif event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_ESCAPE:
+						is_running = False
+						break
 			pygame.time.delay(self.delay)
 
 		#Desliga AI
