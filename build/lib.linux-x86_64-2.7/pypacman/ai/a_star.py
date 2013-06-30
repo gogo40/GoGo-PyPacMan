@@ -141,6 +141,7 @@ def a_star(G, dx = dx_std, dy = dy_std, H = h_std, dist = dist_e):
 
 	D = [];
 	pi = [];
+	t = None
 	for x in range(0, len(G)):
 		D += [[]];
 		pi += [[]];
@@ -154,6 +155,8 @@ def a_star(G, dx = dx_std, dy = dy_std, H = h_std, dist = dist_e):
 				G[x] = "".join(l);
 			elif G[x][y] == '+':
 				t = (x, y);
+	if t == None:
+		return None
 
 	Q = [];
 

@@ -198,14 +198,6 @@ class Window:
 					elif event.action == ai_control.MOVE_P:
 						mov = event.value
 						orig = event.origin
-						dest = event.dest
-
-						print "Move:"
-						print mov
-						print "orig:"
-						print orig
-						print "dest:"
-						print dest
 						
 						self.move_phantom(orig, mov)
 

@@ -90,16 +90,18 @@ def ai_control(ai):
 
 				#encontra menor caminho para o pacman
 				res = a_star.a_star(G)
-				caminho = []
-				pi = res['pi']
-				t = res['t']
-				a_star.gera_caminho(caminho, pi, t);
 
-				#envia decisao da AI
-				if len(caminho) > 1:
-					evt = pygame.event.Event(pygame.USEREVENT, {"action" : MOVE_P, "value" : caminho[1], 
-"origin" : p, "dest": t})
-					pygame.event.post(evt)
+				if res != None:
+					caminho = []
+					pi = res['pi']
+					t = res['t']
+					a_star.gera_caminho(caminho, pi, t);
+
+					#envia decisao da AI
+					if len(caminho) > 1:
+						evt = pygame.event.Event(pygame.USEREVENT, {"action" : MOVE_P, "value" : caminho[1], 
+	"origin" : p, "dest": t})
+						pygame.event.post(evt)
 
 			time.sleep(ai.speed)
 """
