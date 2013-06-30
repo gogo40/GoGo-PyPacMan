@@ -56,9 +56,11 @@ class Window:
 		self.addGrid(G)
 		
 	def addGrid(self, G):
+		#Adiciona grade do jogo
 		self.G = G
 
 	def paintGrid(self):
+		#Pinta a tela do jogo
 		for x in range(0, len(self.G[0])):
 			for y in range(0, len(self.G)):
 				if self.G[y][x] == '#':
@@ -78,7 +80,37 @@ class Window:
 					self.position = self.fruta.get_rect()
 					self.position = self.position.move(x * self.dim_cell, y * self.dim_cell)
 					self.screen.blit(self.fruta, self.position)
+
+	def move_pac_man(self):	
+		#Atualiza posicao do pacman
+		self.position = self.position_pac_man 
+		real_pos = self.real_pos_pac_man
+
+		x = (real_pos[0] + self.dr[0] + self.n_cell) % self.n_cell;
+		y = (real_pos[1] + self.dr[1] + self.m_cell) % self.m_cell;
 		
+		if self.G[x][y] == '.' or self.G[x][y] == 'o':
+			self.real_pos_pac_man = [x, y]
+			self.screen.blit(self.empty, self.position)
+			
+			l = list(self.G[real_pos[0]]);
+			l[real_pos[1]]='.';
+			self.G[real_pos[0]]="".join(l);
+
+			l = list(self.G[x]);
+			l[y]='+';
+			self.G[x]="".join(l);
+
+			N = self.dim_cell * self.n_cell
+			M = self.dim_cell * self.m_cell
+
+			self.position_pac_man[0] = (self.position[0] + self.d[0] + M) % M
+			self.position_pac_man[1] = (self.position[1] + self.d[1] + N) % N
+
+			self.screen.blit(self.pacman, self.position_pac_man)
+
+			pygame.display.flip()
+
 	def run(self):
 		self.screen.fill(self.color)
 		self.paintGrid()
@@ -87,12 +119,13 @@ class Window:
 		is_running = True
 		while is_running:
 			for event in pygame.event.get():
+				#Fecha janela
 				if event.type == pygame.QUIT: 
 					is_running = False
 					break
 
 				#Trata eventos da AI
-				if event.type == pygame.USEREVENT:
+				elif event.type == pygame.USEREVENT:
 
 					#imprime grade
 					if event.action == ai_control.PRINT_G:
@@ -101,7 +134,12 @@ class Window:
 							print G[x]
 
 				#Trata Entrada de usuario
-				if event.type == pygame.KEYDOWN:
+				elif event.type == pygame.KEYUP:
+					#Para o pac man
+					self.d = [0, 0]
+					self.dr = [0, 0]
+			
+				elif event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						is_running = False
 						break
@@ -137,40 +175,12 @@ class Window:
 						self.dr[0] = 1
 
 						self.pacman = pygame.transform.rotate(self.pacmano, 90)
-				if event.type == pygame.KEYUP:
-					self.d = [0, 0]
-					self.dr = [0, 0]
-			
-
-			#Atualiza posicao do pacman
-			self.position = self.position_pac_man 
-			real_pos = self.real_pos_pac_man
-
-			x = (real_pos[0] + self.dr[0] + self.n_cell) % self.n_cell;
-			y = (real_pos[1] + self.dr[1] + self.m_cell) % self.m_cell;
-			
-			if self.G[x][y] == '.' or self.G[x][y] == 'o':
-				self.real_pos_pac_man = [x, y]
-				self.screen.blit(self.empty, self.position)
 				
-				l = list(self.G[real_pos[0]]);
-				l[real_pos[1]]='.';
-				self.G[real_pos[0]]="".join(l);
+			
+			#Move o pac man
+			self.move_pac_man()
 
-				l = list(self.G[x]);
-				l[y]='+';
-				self.G[x]="".join(l);
-
-				N = self.dim_cell * self.n_cell
-				M = self.dim_cell * self.m_cell
-
-				self.position_pac_man[0] = (self.position[0] + self.d[0] + M) % M
-				self.position_pac_man[1] = (self.position[1] + self.d[1] + N) % N
-
-				self.screen.blit(self.pacman, self.position_pac_man)
-
-				pygame.display.flip()
-
+			#Dorme um pouco
 			pygame.time.delay(self.delay)
 
 		#Desliga AI
