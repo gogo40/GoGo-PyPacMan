@@ -1,4 +1,8 @@
+import sys, pygame
 from pypacman.gui import *
+from pypacman.ai import *
+
+pygame.init()
 
 #grade do jogo
 G = [
@@ -30,12 +34,12 @@ G = [
 ".......o.....o........................................"]
 
 
-for l in G:
-	print l
+ai = ai_control.AIControl(G)
+
+ai.start()
 
 gui = window.Window(G)
 gui.run()
+ai.wait()
 
-for l in G:
-	print l
 

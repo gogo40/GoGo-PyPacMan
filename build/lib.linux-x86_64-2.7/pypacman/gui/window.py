@@ -2,7 +2,6 @@ import sys, pygame
 
 class Window:
 	def __init__(self, G):
-		pygame.init()
 		self.delay  = 100
 		#dimensao da celula
 		self.dim_cell = 15
@@ -15,8 +14,9 @@ class Window:
 		self.m_cell = len(G[0]);
 
 		self.size = self.width, self.height = self.dim_cell * len(G[0]), self.dim_cell * len(G)
-		self.screen = pygame.display.set_mode(self.size)
 
+		self.screen = pygame.display.set_mode(self.size)
+		
 		#cor do fundo
 		self.color = 0, 0, 0
 
@@ -51,7 +51,7 @@ class Window:
 		self.d = [0, 0]
 		self.dr = [0, 0]
 		self.addGrid(G)
-
+		
 	def addGrid(self, G):
 		self.G = G
 
@@ -80,7 +80,7 @@ class Window:
 		self.screen.fill(self.color)
 		self.paintGrid()
 		pygame.display.flip()
-
+		
 		is_running = True
 		while is_running:
 			for event in pygame.event.get():
@@ -156,6 +156,7 @@ class Window:
 				pygame.display.flip()
 
 			pygame.time.delay(self.delay)
+			
 
 
 

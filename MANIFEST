@@ -6,5 +6,6 @@ setup.py
 pypacman/__init__.py
 pypacman/ai/__init__.py
 pypacman/ai/a_star.py
+pypacman/ai/ai_control.py
 pypacman/gui/__init__.py
 pypacman/gui/window.py

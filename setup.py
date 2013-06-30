@@ -8,6 +8,7 @@ setup(
     packages=['pypacman','pypacman.ai','pypacman.gui'],
     scripts=[
 	'pypacman/ai/a_star.py',
+	'pypacman/ai/ai_control.py',
 	'pypacman/gui/window.py'
 ],
     url='http://pypi.python.org/pypi/PyPacMan/',
