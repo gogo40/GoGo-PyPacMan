@@ -1,7 +1,9 @@
 import sys, pygame
+from pypacman.ai import *
 
 class Window:
-	def __init__(self, G):
+	def __init__(self, G, ai):
+		self.ai = ai
 		self.delay  = 100
 		#dimensao da celula
 		self.dim_cell = 15
@@ -16,6 +18,7 @@ class Window:
 		self.size = self.width, self.height = self.dim_cell * len(G[0]), self.dim_cell * len(G)
 
 		self.screen = pygame.display.set_mode(self.size)
+		pygame.display.set_caption('PyPacMan')
 		
 		#cor do fundo
 		self.color = 0, 0, 0
@@ -85,6 +88,17 @@ class Window:
 		while is_running:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT: sys.exit()
+
+				#Trata eventos da AI
+				if event.type == pygame.USEREVENT:
+
+					#imprime grade
+					if event.action == ai_control.PRINT_G:
+						G = event.value
+						for x in range(0, len(G)):
+							print G[x]
+
+				#Trata Entrada de usuario
 				if event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						is_running = False
@@ -156,6 +170,9 @@ class Window:
 				pygame.display.flip()
 
 			pygame.time.delay(self.delay)
+
+		#Desliga AI
+		self.ai.call_exit()
 			
 
 

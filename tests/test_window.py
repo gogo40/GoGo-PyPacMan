@@ -38,7 +38,7 @@ ai = ai_control.AIControl(G)
 
 ai.start()
 
-gui = window.Window(G)
+gui = window.Window(G, ai)
 gui.run()
 ai.wait()
 

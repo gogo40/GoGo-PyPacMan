@@ -155,23 +155,21 @@ def a_star(G, dx, dy, H = h_std, dist = dist_e):
 			break;
 
 		for i in range(0, len(dx)):
-			vx = u[0] + dx[i];
-			vy = u[1] + dy[i];
+			vx = (u[0] + dx[i] + len(G)) % len(G);
+			vy = (u[1] + dy[i] + len(G[vx])) % len(G[vx]);
 
 			v = (vx, vy);
 
-			duv = dist(u, v);
-			if vx > -1 and vx < len(G):
-				if vy > -1 and vy < len(G[vx]): 
-					if (D[vx][vy] > D[ux][uy] + duv or D[vx][vy] == None) and (G[vx][vy] == '.' or G[vx][vy] == '+' or G[vx][vy] == '*' or G[vx][vy] == 'o'):
-						D[vx][vy] = D[ux][uy] + duv;
-						pi[vx][vy] = u;
-						"""
-						A única diferença entre o A* e o dijkstra é o modo como é ordenado a heap.
-						No caso, ela utiliza a heurítica H que procura colocar no topo os pontos mais
-						próximos do destino.
-						"""
-						heappush(Q, (D[vx][vy] + H(v, t), v));
+			duv = dist(u, v); 
+			if (D[vx][vy] > D[ux][uy] + duv or D[vx][vy] == None) and (G[vx][vy] == '.' or G[vx][vy] == '+' or G[vx][vy] == '*' or G[vx][vy] == 'o'):
+				D[vx][vy] = D[ux][uy] + duv;
+				pi[vx][vy] = u;
+				"""
+				A única diferença entre o A* e o dijkstra é o modo como é ordenado a heap.
+				No caso, ela utiliza a heurítica H que procura colocar no topo os pontos mais
+				próximos do destino.
+				"""
+				heappush(Q, (D[vx][vy] + H(v, t), v));
 	return {'D':D, 't': t, 'pi': pi, 'u': u};
 
 
