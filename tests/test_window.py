@@ -30,7 +30,12 @@ G = [
 ".......o.....o........................................"]
 
 
+for l in G:
+	print l
+
 gui = window.Window(G)
 gui.run()
 
+for l in G:
+	print l
 

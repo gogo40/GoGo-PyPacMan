@@ -77,17 +77,19 @@ class Window:
 					self.screen.blit(self.fruta, self.position)
 		
 	def run(self):
-		print self.G
-
 		self.screen.fill(self.color)
 		self.paintGrid()
 		pygame.display.flip()
 
-		while 1:
+		is_running = True
+		while is_running:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT: sys.exit()
 				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_LEFT:
+					if event.key == pygame.K_ESCAPE:
+						is_running = False
+						break
+					elif event.key == pygame.K_LEFT:
 						self.d[0] = -self.speed
 						self.d[1] = 0
 
@@ -127,6 +129,7 @@ class Window:
 			#Atualiza posicao do pacman
 			self.position = self.position_pac_man 
 			real_pos = self.real_pos_pac_man
+
 			x = (real_pos[0] + self.dr[0] + self.n_cell) % self.n_cell;
 			y = (real_pos[1] + self.dr[1] + self.m_cell) % self.m_cell;
 			
