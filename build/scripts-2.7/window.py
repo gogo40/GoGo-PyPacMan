@@ -87,7 +87,9 @@ class Window:
 		is_running = True
 		while is_running:
 			for event in pygame.event.get():
-				if event.type == pygame.QUIT: sys.exit()
+				if event.type == pygame.QUIT: 
+					is_running = False
+					break
 
 				#Trata eventos da AI
 				if event.type == pygame.USEREVENT:
