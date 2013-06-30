@@ -53,11 +53,7 @@ class Window:
 		self.addGrid(G)
 
 	def addGrid(self, G):
-		self.G = []
-		for x in range(0, len(G)):
-			self.G.append("");
-			for y in range(0, len(G[x])):
-				self.G[x] += G[x][y]
+		self.G = G
 
 	def paintGrid(self):
 		for x in range(0, len(self.G[0])):
@@ -126,7 +122,6 @@ class Window:
 				if event.type == pygame.KEYUP:
 					self.d = [0, 0]
 					self.dr = [0, 0]
-
 			
 
 			#Atualiza posicao do pacman
