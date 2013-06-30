@@ -134,11 +134,6 @@ class Window:
 							print G[x]
 
 				#Trata Entrada de usuario
-				elif event.type == pygame.KEYUP:
-					#Para o pac man
-					self.d = [0, 0]
-					self.dr = [0, 0]
-			
 				elif event.type == pygame.KEYDOWN:
 					if event.key == pygame.K_ESCAPE:
 						is_running = False

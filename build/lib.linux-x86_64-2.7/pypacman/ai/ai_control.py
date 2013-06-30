@@ -31,7 +31,6 @@ class AIControl:
 	def __init__(self, G):
 		self.G = G
 		self.t = threading.Thread(target=ai_control, args=(self,))
-		self.l = threading.Lock()
 		self.evts = Queue.Queue()
 
 	def put(self, evt):
