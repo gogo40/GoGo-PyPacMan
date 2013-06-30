@@ -1,8 +1,8 @@
 import sys, pygame
 import a_star
 import time
-from threading import *
-from multiprocessing import Queue
+import threading
+import Queue
 
 EXIT = 1
 PRINT_G = 2
@@ -30,9 +30,9 @@ class AIEvent:
 class AIControl:
 	def __init__(self, G):
 		self.G = G
-		self.t = Thread(target=ai_control, args=(self,))
-		self.l = Lock()
-		self.evts = Queue()
+		self.t = threading.Thread(target=ai_control, args=(self,))
+		self.l = threading.Lock()
+		self.evts = Queue.Queue()
 
 	def put(self, evt):
 		self.evts.put(evt)
