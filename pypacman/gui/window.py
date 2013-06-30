@@ -1,6 +1,18 @@
+# -*- coding: utf-8 -*-
+
+"""
+PyPacMan
+Copyright (c) 2013 - Péricles Lopes Machado
+
+This file is distributed under the MIT license. See LICENSE for details.
+"""
+
 import sys, pygame
 from pypacman.ai import *
 
+"""
+Implementação da janela de visualização do jogo
+"""
 class Window:
 	def __init__(self, G, ai):
 		self.ai = ai
@@ -54,13 +66,17 @@ class Window:
 		self.d = [0, 0]
 		self.dr = [0, 0]
 		self.addGrid(G)
-		
+
+	"""
+	Adiciona grade do jogo
+	"""
 	def addGrid(self, G):
-		#Adiciona grade do jogo
 		self.G = G
 
-	def paintGrid(self):
-		#Pinta a tela do jogo
+	"""
+	Pinta a tela do jogo
+	"""
+	def paintGrid(self):	
 		for x in range(0, len(self.G[0])):
 			for y in range(0, len(self.G)):
 				if self.G[y][x] == '#':
@@ -81,8 +97,10 @@ class Window:
 					self.position = self.position.move(x * self.dim_cell, y * self.dim_cell)
 					self.screen.blit(self.fruta, self.position)
 
-	def move_pac_man(self):	
-		#Atualiza posicao do pacman
+	"""
+	Atualiza posicao do pacman
+	"""
+	def move_pac_man(self):		
 		self.position = self.position_pac_man 
 		real_pos = self.real_pos_pac_man
 
@@ -111,6 +129,9 @@ class Window:
 
 			pygame.display.flip()
 
+	"""
+	Roda renderização do jogo e captura de movimentos do jogador e da AI
+	"""
 	def run(self):
 		self.screen.fill(self.color)
 		self.paintGrid()
@@ -132,6 +153,24 @@ class Window:
 						G = event.value
 						for x in range(0, len(G)):
 							print G[x]
+
+					#imprime fantasmas
+					elif event.action == ai_control.PRINT_P:
+						print "Phatoms:"
+						print event.value
+
+					#move fantasma
+					elif event.action == ai_control.MOVE_P:
+						mov = event.value
+						orig = event.origin
+						dest = event.dest
+
+						print "Move:"
+						print mov
+						print "orig:"
+						print orig
+						print "dest:"
+						print dest
 
 				#Trata Entrada de usuario
 				elif event.type == pygame.KEYDOWN:

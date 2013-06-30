@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 
 """
+PyPacMan
+Copyright (c) 2013 - Péricles Lopes Machado
+
+This file is distributed under the MIT license. See LICENSE for details.
+"""
+
+
+"""
 Algoritmo A* 
 Autores: 
     Peter Hart, Nils Nilsson and Bertram Raphael 
@@ -27,6 +35,18 @@ Referências:
 from heapq import *;
 from math import *;
 
+"""
+Gera vetor contendo o caminho
+"""
+def gera_caminho(caminho, pi, u):
+	ux = u[0];
+	uy = u[1];
+
+	if pi[ux][uy] == None:
+		caminho.append(u)
+	else:
+		gera_caminho(caminho, pi, pi[ux][uy]);
+		caminho.append(u)
 
 """
 Função para imprimir o caminho
@@ -92,7 +112,11 @@ def dist_e(s, t):
 	Dy = s[1] - t[1];
 	return sqrt(Dx * Dx + Dy * Dy);
 
-
+"""
+Movimentacoes padrão
+"""
+dx_std = [-1,  0,  0,  1];
+dy_std = [ 0, -1,  1,  0];
 
 """
 Função que aplica o A* a uma grade
@@ -109,7 +133,7 @@ H é a heuristica utilizada
 dist é a métrica.
 """
 
-def a_star(G, dx, dy, H = h_std, dist = dist_e):
+def a_star(G, dx = dx_std, dy = dy_std, H = h_std, dist = dist_e):
 	"""
 	Localizando a posição do jogador ('x') e do destino ('+')
 	e inicializa matriz com estimativa de distância D.
@@ -170,7 +194,7 @@ def a_star(G, dx, dy, H = h_std, dist = dist_e):
 				próximos do destino.
 				"""
 				heappush(Q, (D[vx][vy] + H(v, t), v));
-	return {'D':D, 't': t, 'pi': pi, 'u': u};
+	return {'D':D, 't': t, 'pi': pi, 'u': u, 's': s};
 
 
 
