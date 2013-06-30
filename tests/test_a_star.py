@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from pypacman.ai import *
 
-a_star.hello();
 
 """
 Teste do Astar
@@ -65,6 +64,7 @@ if D[t[0]][t[1]] != None:
 	"""
 	Descomente essa linha se quiseres ver o caminho percorrido na grade
 	"""
-	#a_star.renderizar_caminho(pi, G, u);
+	a_star.renderizar_caminho(pi, G, u);
 else:
 	print "Não existe caminho entre s e t!"
+

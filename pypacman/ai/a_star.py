@@ -93,8 +93,6 @@ def dist_e(s, t):
 	return sqrt(Dx * Dx + Dy * Dy);
 
 
-def hello():
-	print "hello";
 
 """
 Função que aplica o A* a uma grade
