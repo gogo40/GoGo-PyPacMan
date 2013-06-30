@@ -37,11 +37,17 @@ class Window:
 
 		self.size = self.width, self.height = self.dim_cell * len(G[0]), self.dim_cell * len(G)
 
-		self.screen = pygame.display.set_mode(self.size)
+		self.screen = pygame.display.set_mode((self.width, self.height + 100))
 		pygame.display.set_caption('PyPacMan')
 		
 		#cor do fundo
-		self.color = 0, 0, 0
+		self.BLACK = 0, 0, 0
+		self.RED = (255, 0, 0)
+		self.WHITE = (255, 255, 255)
+		self.GREEN = (0, 255, 0)
+		self.BLUE = (0, 0, 128)
+
+		self.color = self.BLACK
 
 
 		#elementos do jogo
@@ -68,12 +74,46 @@ class Window:
 
 		self.parede = pygame.image.load("imgs/parede.png")
 		self.parede = pygame.transform.smoothscale(self.parede, (self.dim_cell, self.dim_cell))
+		
+		#Fonte do jogo
+		self.fonte = pygame.font.Font('fonts/astrolyt.ttf', 16)
 
 		self.position = self.pacmano.get_rect()
 		self.real_pos_pac_man = [0, 0] 
 		self.d = [0, 0]
 		self.dr = [0, 0]
+		
 		self.addGrid(G)
+
+	"""
+	Adiciona mensagem do jogo
+	"""
+	def addMsg(self, msg, color):
+		msg = self.fonte.render(msg, True, color, self.BLACK)
+		msg_rect = msg.get_rect()
+		msg_rect = msg_rect.move(200, self.height)
+
+		self.screen.blit(msg, msg_rect)
+
+		pygame.display.flip()
+		
+	"""
+	Adiciona Score do jogo
+	"""
+	def addScore(self, msg, score):
+		msg = self.fonte.render(msg, True, self.BLUE, self.BLACK)
+		msg_rect = msg.get_rect()
+		msg_rect = msg_rect.move(0, self.height)
+
+		self.screen.blit(msg, msg_rect)
+
+		score = self.fonte.render(score, True, self.WHITE, self.BLACK)
+		score_rect = score.get_rect()
+		score_rect = score_rect.move(100, self.height)
+
+		self.screen.blit(score, score_rect)
+
+		pygame.display.flip()
 
 	"""
 	Adiciona grade do jogo
@@ -183,6 +223,7 @@ class Window:
 		self.screen.fill(self.color)
 		self.paintGrid()
 		pygame.display.flip()
+		self.addScore("Score:", "0000000")
 		
 		is_running = True
 		while is_running:
@@ -254,6 +295,7 @@ class Window:
 			#Verifica se jogo acabou
 			if self.game.is_over():
 				print "You Win!"
+				self.addMsg("You win!", self.GREEN)
 				self.game.print_score()
 				is_running = False
 				break
@@ -261,8 +303,11 @@ class Window:
 			#Move o pac man e verifica se ele tá vivo ainda
 			if not self.move_pac_man():
 				print "You Lose!"
+				self.addMsg("You lose!", self.RED)
 				is_running = False
 				break
+
+			self.addScore("Score:", "0000000")
 
 			#Dorme um pouco
 			pygame.time.delay(self.delay)
