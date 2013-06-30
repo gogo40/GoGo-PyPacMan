@@ -9,13 +9,21 @@ This file is distributed under the MIT license. See LICENSE for details.
 
 import sys, pygame
 from pypacman.ai import *
+from pypacman.game import *
 
 """
 Implementação da janela de visualização do jogo
 """
 class Window:
 	def __init__(self, G, ai, delay = 100):
+
+		#controlador do jogo
+		self.game = game_control.Game(G)
+
+		#controlador da AI
 		self.ai = ai
+
+
 		self.delay  = delay
 		#dimensao da celula
 		self.dim_cell = 15
@@ -141,6 +149,10 @@ class Window:
 		if self.G[xo][yo] != '+':
 			return False
 
+		if self.G[x][y] == 'o':
+			self.game.add_point(1)
+			self.game.print_score()	
+		
 		if self.G[x][y] == '.' or self.G[x][y] == 'o':
 			self.real_pos_pac_man = [x, y]
 			self.screen.blit(self.empty, position)
@@ -198,14 +210,6 @@ class Window:
 					elif event.action == ai_control.MOVE_P:
 						mov = event.value
 						orig = event.origin
-						dest = event.dest
-
-						print "Move:"
-						print mov
-						print "orig:"
-						print orig
-						print "dest:"
-						print dest
 						
 						self.move_phantom(orig, mov)
 
@@ -247,7 +251,13 @@ class Window:
 
 						self.pacman = pygame.transform.rotate(self.pacmano, 90)
 				
-			
+			#Verifica se jogo acabou
+			if self.game.is_over():
+				print "You Win!"
+				self.game.print_score()
+				is_running = False
+				break
+
 			#Move o pac man e verifica se ele tá vivo ainda
 			if not self.move_pac_man():
 				print "You Lose!"

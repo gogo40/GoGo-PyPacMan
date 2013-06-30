@@ -14,11 +14,12 @@ setup(
     version='0.1.5',
     author='Pericles Lopes Machado',
     author_email='pericles.raskolnikoff@gmail.com',
-    packages=['pypacman','pypacman.ai','pypacman.gui'],
+    packages=['pypacman','pypacman.ai','pypacman.gui','pypacman.game'],
     scripts=[
 	'pypacman/ai/a_star.py',
 	'pypacman/ai/ai_control.py',
-	'pypacman/gui/window.py'
+	'pypacman/gui/window.py',
+	'pypacman/game/game_control.py'
 ],
     url='http://pypi.python.org/pypi/PyPacMan/',
     license='LICENSE.txt',
