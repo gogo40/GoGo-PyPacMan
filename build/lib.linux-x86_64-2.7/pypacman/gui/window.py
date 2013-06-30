@@ -14,9 +14,9 @@ from pypacman.ai import *
 Implementação da janela de visualização do jogo
 """
 class Window:
-	def __init__(self, G, ai):
+	def __init__(self, G, ai, delay = 100):
 		self.ai = ai
-		self.delay  = 100
+		self.delay  = delay
 		#dimensao da celula
 		self.dim_cell = 15
 
@@ -98,18 +98,52 @@ class Window:
 					self.screen.blit(self.fruta, self.position)
 
 	"""
+	Atualiza posicao do fantasma
+	"""
+	def move_phantom(self, orig, dest):
+		xo, yo = orig
+		xf, yf = dest
+
+		l = list(self.G[xo]);
+		l[yo] = '.';
+		self.G[xo] = "".join(l);
+
+		l = list(self.G[xf]);
+		l[yf] = '*';
+		self.G[xf] = "".join(l);
+
+		position =  self.fantasma[(xf+yf)%4].get_rect()
+		positiono = position.move(yo * self.dim_cell, xo * self.dim_cell)
+		self.screen.blit(self.empty, positiono)
+
+		position =  self.fantasma[(xf+yf)%4].get_rect()
+		positionf = position.move(yf * self.dim_cell, xf * self.dim_cell)
+		self.screen.blit(self.fantasma[(xf+yf)%4], positionf)
+
+		pygame.display.flip()
+		
+
+	"""
 	Atualiza posicao do pacman
 	"""
 	def move_pac_man(self):		
-		self.position = self.position_pac_man 
+		position = self.position_pac_man 
 		real_pos = self.real_pos_pac_man
+		
+		xo, yo = real_pos
 
 		x = (real_pos[0] + self.dr[0] + self.n_cell) % self.n_cell;
 		y = (real_pos[1] + self.dr[1] + self.m_cell) % self.m_cell;
 		
+		"""
+		Verifica se pac-man ainda vive
+		"""
+		if self.G[xo][yo] != '+':
+			return False
+
 		if self.G[x][y] == '.' or self.G[x][y] == 'o':
 			self.real_pos_pac_man = [x, y]
-			self.screen.blit(self.empty, self.position)
+			self.screen.blit(self.empty, position)
 			
 			l = list(self.G[real_pos[0]]);
 			l[real_pos[1]]='.';
@@ -122,12 +156,13 @@ class Window:
 			N = self.dim_cell * self.n_cell
 			M = self.dim_cell * self.m_cell
 
-			self.position_pac_man[0] = (self.position[0] + self.d[0] + M) % M
-			self.position_pac_man[1] = (self.position[1] + self.d[1] + N) % N
+			self.position_pac_man[0] = (position[0] + self.d[0] + M) % M
+			self.position_pac_man[1] = (position[1] + self.d[1] + N) % N
 
 			self.screen.blit(self.pacman, self.position_pac_man)
 
 			pygame.display.flip()
+		return True
 
 	"""
 	Roda renderização do jogo e captura de movimentos do jogador e da AI
@@ -171,6 +206,8 @@ class Window:
 						print orig
 						print "dest:"
 						print dest
+						
+						self.move_phantom(orig, mov)
 
 				#Trata Entrada de usuario
 				elif event.type == pygame.KEYDOWN:
@@ -211,8 +248,11 @@ class Window:
 						self.pacman = pygame.transform.rotate(self.pacmano, 90)
 				
 			
-			#Move o pac man
-			self.move_pac_man()
+			#Move o pac man e verifica se ele tá vivo ainda
+			if not self.move_pac_man():
+				print "You Lose!"
+				is_running = False
+				break
 
 			#Dorme um pouco
 			pygame.time.delay(self.delay)

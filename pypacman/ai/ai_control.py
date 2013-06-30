@@ -13,6 +13,7 @@ import time
 import threading
 import Queue
 
+
 """
 MACROS DO SISTEMA DE AI
 """
@@ -74,12 +75,14 @@ def ai_control(ai):
 				break
 
 		if is_running:
+			"""	
+			#Mensagens de depuração		
 			evt = pygame.event.Event(pygame.USEREVENT, {"action" : PRINT_G, "value" : ai.G})
 			pygame.event.post(evt)
+			"""
 
+			#Localiza fantasmas da grade
 			pht = find_phantoms(ai.G)
-			evt = pygame.event.Event(pygame.USEREVENT, {"action" : PRINT_P, "value" : pht})
-			pygame.event.post(evt)
 
 			for p in pht:
 				#copia e marca a grade
@@ -98,7 +101,7 @@ def ai_control(ai):
 "origin" : p, "dest": t})
 					pygame.event.post(evt)
 
-			time.sleep(0.2)
+			time.sleep(ai.speed)
 """
 Eventos da AI, utilizado para comunicação da AI com o resto do sistema
 """
@@ -111,10 +114,15 @@ class AIEvent:
 Classe de controle da AI
 """
 class AIControl:
-	def __init__(self, G):
+
+	"""
+	Speed controla a velocidade dos fantasmas
+	"""
+	def __init__(self, G, speed = 0.8):
 		self.G = G
 		self.t = threading.Thread(target=ai_control, args=(self,))
 		self.evts = Queue.Queue()
+		self.speed = speed
 
 	def put(self, evt):
 		self.evts.put(evt)
