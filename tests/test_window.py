@@ -47,11 +47,14 @@ phantom_speed = 0.5
 #velocidade do pac man (em mili-segundos)
 pac_man_speed = 200
 
+#dimensão das céluas do jogo
+dim_cell = 25
+
 ai = ai_control.AIControl(G, phantom_speed)
 
 ai.start()
 
-gui = window.Window(G, ai, pac_man_speed)
+gui = window.Window(G, ai, dim_cell, pac_man_speed)
 gui.run()
 ai.wait()
 

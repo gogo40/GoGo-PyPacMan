@@ -15,7 +15,7 @@ from pypacman.game import *
 Implementação da janela de visualização do jogo
 """
 class Window:
-	def __init__(self, G, ai, delay = 100):
+	def __init__(self, G, ai, dim_cell = 25, delay = 100):
 
 		#controlador do jogo
 		self.game = game_control.Game(G)
@@ -26,7 +26,7 @@ class Window:
 
 		self.delay  = delay
 		#dimensao da celula
-		self.dim_cell = 15
+		self.dim_cell = dim_cell
 
 		#velocidade da celula
 		self.speed = self.dim_cell
@@ -37,7 +37,7 @@ class Window:
 
 		self.size = self.width, self.height = self.dim_cell * len(G[0]), self.dim_cell * len(G)
 
-		self.screen = pygame.display.set_mode((self.width, self.height + 50))
+		self.screen = pygame.display.set_mode((self.width, self.height + 30))
 		pygame.display.set_caption('PyPacMan')
 		
 		#cor do fundo
