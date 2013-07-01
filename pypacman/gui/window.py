@@ -225,6 +225,8 @@ class Window:
 		pygame.display.flip()
 		
 		is_running = True
+		is_paused = False
+
 		while is_running:
 			for event in pygame.event.get():
 				#Fecha janela
@@ -255,7 +257,12 @@ class Window:
 
 				#Trata Entrada de usuario
 				elif event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_ESCAPE:
+					if event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
+						is_paused = not is_paused
+						#Pausa AI
+						self.ai.call_pause()
+						break
+					elif event.key == pygame.K_ESCAPE:
 						is_running = False
 						break
 					elif event.key == pygame.K_LEFT:
@@ -290,25 +297,29 @@ class Window:
 						self.dr[0] = 1
 
 						self.pacman = pygame.transform.rotate(self.pacmano, 90)
-				
-			#Verifica se jogo acabou
-			if self.game.is_over():
-				self.addMsg("You win!", self.GREEN, 200, self.height)
-				self.game.print_score()
-				break
-
-			#Move o pac man e verifica se ele tá vivo ainda
-			if not self.move_pac_man():
-				self.addMsg("You lose!", self.RED, 200, self.height)
-				break
-
+			
 			self.addScore("Score:", self.game.get_score())
+		
+			if not is_paused:
+				#Verifica se jogo acabou
+				if self.game.is_over():
+					self.addMsg("You win!              ", self.GREEN, 200, self.height)
+					break
+
+				#Move o pac man e verifica se ele tá vivo ainda
+				if not self.move_pac_man():
+					self.addMsg("You lose!             ", self.RED, 200, self.height)
+					break
+
+				self.addMsg("Press ENTER to pause.   ", self.WHITE, 200, self.height)
+			else:
+				self.addMsg("Paused.                    ", self.WHITE, 200, self.height)
 
 			#Dorme um pouco
 			pygame.time.delay(self.delay)
 
 		#aguarda ESC ou QUIT
-		self.addMsg("Press ESC to exit...", self.YELLOW, 300, self.height)
+		self.addMsg("Press ESC to exit.", self.YELLOW, 300, self.height)
 		while is_running:
 			for event in pygame.event.get():
 				#Fecha janela

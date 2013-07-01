@@ -33,6 +33,10 @@ PRINT_P = 3
 MOVE FANTASMA
 """
 MOVE_P = 4
+"""
+PAUSE APERTADO
+"""
+PAUSE = 5
 
 """
 Copia e marca uma grade
@@ -67,14 +71,17 @@ Controla o movimento dos fantasmas
 """
 def ai_control(ai):
 	is_running = True
+	is_paused = False
 
 	while is_running:
 		for event in ai.get():
 			if event.type == EXIT:
 				is_running = False
 				break
+			elif event.type == PAUSE:
+				is_paused = not is_paused
 
-		if is_running:
+		if is_running and (not is_paused):
 			"""	
 			#Mensagens de depuração		
 			evt = pygame.event.Event(pygame.USEREVENT, {"action" : PRINT_G, "value" : ai.G})
@@ -103,7 +110,9 @@ def ai_control(ai):
 	"origin" : p, "dest": t})
 						pygame.event.post(evt)
 
-			time.sleep(ai.speed)
+		time.sleep(ai.speed)
+
+
 """
 Eventos da AI, utilizado para comunicação da AI com o resto do sistema
 """
@@ -131,6 +140,9 @@ class AIControl:
 
 	def call_exit(self):
 		self.put(AIEvent(EXIT))
+
+	def call_pause(self):
+		self.put(AIEvent(PAUSE))
 	
 	def get(self):
 		if self.evts.empty():
