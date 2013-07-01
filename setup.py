@@ -11,7 +11,7 @@ from distutils.core import setup
 
 setup(
     name='PyPacMan',
-    version='0.1.5',
+    version='0.1.6',
     author='Pericles Lopes Machado',
     author_email='pericles.raskolnikoff@gmail.com',
     packages=['pypacman','pypacman.ai','pypacman.gui','pypacman.game'],
