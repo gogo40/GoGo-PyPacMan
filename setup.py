@@ -11,7 +11,7 @@ from distutils.core import setup
 
 setup(
     name='PyPacMan',
-    version='0.1.6',
+    version='0.1.7',
     author='Pericles Lopes Machado',
     author_email='pericles.raskolnikoff@gmail.com',
     packages=['pypacman','pypacman.ai','pypacman.gui','pypacman.game'],
@@ -23,7 +23,7 @@ setup(
 ],
     url='http://pypi.python.org/pypi/PyPacMan/',
     license='LICENSE.txt',
-    description='Useful towel-related stuff.',
+    description='Um clone do pacman desenvolvido como estudo de caso da aplicação de sistemas paralelos em games de tempor real.',
     long_description=open('README.txt').read(),
     install_requires=[
 	"pygame >= 1.0.0"
