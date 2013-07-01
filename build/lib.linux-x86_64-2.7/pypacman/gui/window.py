@@ -319,7 +319,7 @@ class Window:
 			pygame.time.delay(self.delay)
 
 		#aguarda ESC ou QUIT
-		self.addMsg("Press ESC to exit.", self.YELLOW, 300, self.height)
+		self.addMsg("Press ESC to exit.", self.YELLOW, 500, self.height)
 		while is_running:
 			for event in pygame.event.get():
 				#Fecha janela
