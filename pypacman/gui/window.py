@@ -303,15 +303,15 @@ class Window:
 			if not is_paused:
 				#Verifica se jogo acabou
 				if self.game.is_over():
-					self.addMsg("You win!              ", self.GREEN, 200, self.height)
+					self.addMsg("You win!                   ", self.GREEN, 200, self.height)
 					break
 
 				#Move o pac man e verifica se ele tá vivo ainda
 				if not self.move_pac_man():
-					self.addMsg("You lose!             ", self.RED, 200, self.height)
+					self.addMsg("You lose!                 ", self.RED, 200, self.height)
 					break
 
-				self.addMsg("Press ENTER to pause.   ", self.WHITE, 200, self.height)
+				self.addMsg("Press ENTER to pause.      ", self.WHITE, 200, self.height)
 			else:
 				self.addMsg("Paused.                    ", self.WHITE, 200, self.height)
 
@@ -319,7 +319,7 @@ class Window:
 			pygame.time.delay(self.delay)
 
 		#aguarda ESC ou QUIT
-		self.addMsg("Press ESC to exit.", self.YELLOW, 500, self.height)
+		self.addMsg("Press ESC to exit.   ", self.YELLOW, 500, self.height)
 		while is_running:
 			for event in pygame.event.get():
 				#Fecha janela
