@@ -1,3 +1,5 @@
+[![Code Health](https://landscape.io/github/gogo40/PyPacMan/master/landscape.svg?style=flat)](https://landscape.io/github/gogo40/PyPacMan/master)
+
 ========
 PyPacMan
 ========
